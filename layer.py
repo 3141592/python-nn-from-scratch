@@ -32,8 +32,8 @@ class Layer:
         """
         self.values = []
         for node in self.nodes:
-            node.weights = self.values.append(node.forward_prop(x))
-        
+            value = node.forward_prop(x)
+            self.values.append(value)
         return self.values
 
     def print_weights(self):

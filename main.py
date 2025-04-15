@@ -9,27 +9,47 @@ y = [1, 4, 9, 16]
 # Define network
 network = Network()
 
-# Define nodes
-for layer_index in range(4):
-    # Define layer
-    layer = Layer()
+#
+# Define layer 1
+layer = Layer()
 
-    for node_index in range(3):
-        node = Node()
-        #print("="*18)
-        #print(node.weights)
-        #print(node.bias)
-        layer.add_node(node)
+for node_index in range(3):
+    node = Node()
+    layer.add_node(node)
 
-    # Build network
-    network.add_layer(layer)
+# Build network
+network.add_layer(layer)
 
-# Print network
-#print("="*18)
-#print(network)
+#
+# Define layer 2
+layer = Layer()
+
+for node_index in range(5):
+    node = Node()
+    layer.add_node(node)
+
+# Build network
+network.add_layer(layer)
+
+#
+# Define layer 3
+layer = Layer()
+
+for node_index in range(1):
+    node = Node()
+    layer.add_node(node)
+
+# Build network
+network.add_layer(layer)
 
 # Forward propagation
 network.forward_prop(x)
+
+# Print network
+print("="*18)
+print(network)
+
+print("="*18)
 network.print_weights()
 
 

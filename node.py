@@ -17,21 +17,19 @@ class Node:
         if self.debug: print("Initialized Node")
 
     def __str__(self):
-        return f"Node(value={self.value:.4f}, bias={self.bias:.4f}, weights={len(self.weights) if self.weights else 0})"
+        return f"Node(value={self.value:.4f}, bias={self.bias:.4f}, weights={len(self.weights)})"
 
     def initialize_weights(self, x):
         """
         Argument: x is an example list
         """
-        if len(self.weights) == 0:
-            self.weights = [random.uniform(0, 1) for _ in range(len(x))]
+        self.weights = [random.uniform(0, 1) for _ in range(len(x))]
 
     def initialize_bias(self):
         """
         Argument: x is an example list
         """
-        if len(self.weights) == 0:
-            self.bias = random.uniform(0, 1)
+        self.bias = random.uniform(0, 1)
 
     def forward_prop(self, x):
         """
@@ -39,11 +37,12 @@ class Node:
         """
         if len(self.weights) == 0:
             self.initialize_weights(x)
+
+        if self.bias == 0:
             self.initialize_bias()
 
         z = np.dot(self.weights, x) + self.bias
         self.value = Activation.sigmoid(z)
-        print(self.weights)
         return self.value
 
     def print_weights(self):
