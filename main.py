@@ -2,6 +2,9 @@ from network import Network
 from layer import Layer
 from node import Node
 
+def mean_squared_error(y_pred, y_true):
+    return sum((yp - yt) ** 2 for yp, yt in zip(y_pred, y_true)) / len(y_true)
+
 # Example data
 x = [1, 2, 3, 4]
 y = [1, 4, 9, 16]
@@ -35,7 +38,7 @@ network.add_layer(layer)
 # Define layer 3
 layer = Layer()
 
-for node_index in range(1):
+for node_index in range(4):
     node = Node()
     layer.add_node(node)
 
@@ -43,13 +46,19 @@ for node_index in range(1):
 network.add_layer(layer)
 
 # Forward propagation
-network.forward_prop(x)
+output = network.forward_prop(x)
+
+# Compute and print the loss
+loss = mean_squared_error(output, y)
+print(f"y: {y}")
+print(f"Prediction: {output}")
+print(f"Loss: {loss:.4f}")
 
 # Print network
-print("="*18)
-print(network)
+#print("="*18)
+#print(network)
 
-print("="*18)
-network.print_weights()
+#print("="*18)
+#network.print_weights()
 
 

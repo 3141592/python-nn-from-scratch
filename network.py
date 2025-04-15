@@ -29,6 +29,7 @@ class Network:
     def forward_prop(self, x):
         for layer in self.layers:
             x = layer.forward(x)
+        return x
 
     def print_weights(self):
         for layer in self.layers:
