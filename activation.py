@@ -5,15 +5,15 @@ class Activation:
     This class represents a Neural Network Node
     """
     @staticmethod 
-    def sigmoid(self, x):
+    def sigmoid(x):
         return 1 / (1 + exp(-x))
 
     @staticmethod 
-    def relu(self, x):
+    def relu(x):
         return max(0, x)
 
     @staticmethod 
-    def tanh(self, x):
+    def tanh(x):
         return 2 / (1 + exp(-2*x)) - 1
 
 
