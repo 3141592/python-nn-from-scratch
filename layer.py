@@ -36,6 +36,16 @@ class Layer:
             self.values.append(value)
         return self.values
 
+    def backward(self, x):
+        """
+        One step of backward propagation.
+        """
+        self.values = []
+        for node in self.nodes:
+            value = node.backward_prop(x)
+            self.values.append(value)
+        return self.values
+
     def print_weights(self):
         """
         Print weights.

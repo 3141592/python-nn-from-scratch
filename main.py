@@ -38,7 +38,7 @@ network.add_layer(layer)
 # Define layer 3
 layer = Layer()
 
-for node_index in range(4):
+for node_index in range(1):
     node = Node()
     layer.add_node(node)
 
@@ -50,8 +50,12 @@ output = network.forward_prop(x)
 
 # Compute and print the loss
 loss = mean_squared_error(output, y)
+errors = [i - j for i, j in zip(output, y)]
+
+print(f"x: {x}")
 print(f"y: {y}")
 print(f"Prediction: {output}")
+print(f"Error: {errors}")
 print(f"Loss: {loss:.4f}")
 
 # Print network

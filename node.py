@@ -42,7 +42,16 @@ class Node:
             self.initialize_bias()
 
         z = np.dot(self.weights, x) + self.bias
-        self.value = Activation.sigmoid(z)
+        self.z = z
+        self.value = Activation.relu(z)
+        return self.value
+
+    def backward_prop(self, x):
+        """
+        One step of backward propagation.
+        """
+        z = np.dot(self.weights, x) + self.bias
+        self.value = Activation.relu(z)
         return self.value
 
     def print_weights(self):
