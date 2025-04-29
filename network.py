@@ -7,6 +7,7 @@ class Network:
     """
     layers: list = field(default_factory=list)
     debug: bool = False
+    learning_rate: float = 0.1
 
     def __post_init__(self):
         self.layeArs = []
@@ -31,10 +32,17 @@ class Network:
             x = layer.forward(x)
         return x
 
-    def backward_prop(self, x):
+    def backward_prop(self, x, y):
+        prev_activations = x
         for layer in self.layers:
-            x = layer.backward(x)
-        return x
+            if layer == self.layers[-1]:
+                # output layer
+                layer.backward(self.learning_rate, prev_activations, y_true=y)
+            else:
+                # hidden layer
+                layer.backward(self.learning_rate, prev_activations, y_true=None)
+
+            prev_activations = layer.values
 
     def print_weights(self):
         for layer in self.layers:

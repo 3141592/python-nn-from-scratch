@@ -8,6 +8,11 @@ class Activation:
     def sigmoid(x):
         return 1 / (1 + exp(-x))
 
+    @staticmethod
+    def sigmoid_derivative(z):
+        s = Activation.sigmoid(z)
+        return s * (1 - s)
+
     @staticmethod 
     def relu(x):
         return max(0, x)

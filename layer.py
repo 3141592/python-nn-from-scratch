@@ -36,15 +36,18 @@ class Layer:
             self.values.append(value)
         return self.values
 
-    def backward(self, x):
+    def backward(self, learning_rate, prev_activations, y_true):
         """
         One step of backward propagation.
         """
-        self.values = []
-        for node in self.nodes:
-            value = node.backward_prop(x)
-            self.values.append(value)
-        return self.values
+        next_layer_deltas = None
+        # If the output layer
+        if y_true:
+            for node in self.nodes:
+                next_layer_deltas = node.backward_prop(learning_rate, prev_activations, y_true)
+        else:
+            for node in self.nodes:
+                next_layer_deltas = node.backward_prop(learning_rate, prev_activations, next_layer_deltas)
 
     def print_weights(self):
         """

@@ -43,16 +43,23 @@ class Node:
 
         z = np.dot(self.weights, x) + self.bias
         self.z = z
-        self.value = Activation.relu(z)
+        self.value = Activation.sigmoid(z)
         return self.value
 
-    def backward_prop(self, x):
+    def backward_prop(self, learning_rate, prev_activations, y_true=None, next_layer=None):
         """
         One step of backward propagation.
         """
-        z = np.dot(self.weights, x) + self.bias
-        self.value = Activation.relu(z)
-        return self.value
+        if y_true:
+            self.delta = (self.value - y_true) * Activation.sigmoid_derivative(self.z)
+        else:
+            delta_sum = sum(w * node.delta for w, node in zip(self.weights, next_layer))
+            self.delta = delta_sum * Activation.sigmoid_derivative(self.z)
+
+        for i in range(len(self.weights)):
+            self.weights[i] -= learning_rate * self.delta * prev_activations[i]
+
+        self.bias -= learning_rate * self.delta
 
     def print_weights(self):
         print(self.weights)

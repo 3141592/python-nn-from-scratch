@@ -11,6 +11,7 @@ y = [1, 4, 9, 16]
 
 # Define network
 network = Network()
+network.learning_rate = 0.1
 
 #
 # Define layer 1
@@ -45,12 +46,17 @@ for node_index in range(1):
 # Build network
 network.add_layer(layer)
 
-# Forward propagation
-output = network.forward_prop(x)
+# Set epochs
+epochs = 3
 
-# Compute and print the loss
-loss = mean_squared_error(output, y)
-errors = [i - j for i, j in zip(output, y)]
+for epoch in range(1, epochs + 1):
+    # Forward propagation
+    output = network.forward_prop(x)
+
+    # Compute and print the loss
+    loss = mean_squared_error(output, y)
+    print(loss)
+    network.backward_prop(x, y)
 
 print(f"x: {x}")
 print(f"y: {y}")
