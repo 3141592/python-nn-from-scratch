@@ -55,13 +55,16 @@ for epoch in range(1, epochs + 1):
 
     # Compute and print the loss
     loss = mean_squared_error(output, y)
-    print(loss)
     network.backward_prop(x, y)
+
+    if epoch % 100 == 0 or epoch == 1:
+        print(f"Epoch {epoch}: loss = {loss:.4f}")
+
 
 print(f"x: {x}")
 print(f"y: {y}")
 print(f"Prediction: {output}")
-print(f"Error: {errors}")
+#print(f"Error: {errors}")
 print(f"Loss: {loss:.4f}")
 
 # Print network

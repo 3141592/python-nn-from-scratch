@@ -1,3 +1,5 @@
+from dataclasses import dataclass
+from typing import Callable
 from math import exp
 
 class Activation:
@@ -17,8 +19,20 @@ class Activation:
     def relu(x):
         return max(0, x)
 
+    @staticmethod
+    def relu_derivative(z):
+        return 1 if z > 0 else 0
+
     @staticmethod 
     def tanh(x):
         return 2 / (1 + exp(-2*x)) - 1
 
+    @staticmethod
+    def tanh_derivative(z):
+        t = math.tanh(z)
+        return 1 - t * t
 
+@dataclass
+class ActivationFunction:
+    func: Callable[[float], float]
+    derivative: Callable[[float], float]

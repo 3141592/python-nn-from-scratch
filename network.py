@@ -33,16 +33,17 @@ class Network:
         return x
 
     def backward_prop(self, x, y):
-        prev_activations = x
-        for layer in self.layers:
-            if layer == self.layers[-1]:
-                # output layer
-                layer.backward(self.learning_rate, prev_activations, y_true=y)
-            else:
-                # hidden layer
-                layer.backward(self.learning_rate, prev_activations, y_true=None)
+        # Forward pass values must be saved in the layers (activations, z)
+        reversed_layers = list(reversed(self.layers))
+        next_grad = None  # Start with None
 
-            prev_activations = layer.values
+        for i, layer in enumerate(reversed_layers):
+            if i == 0:
+                # Output layer: needs true y
+                next_grad = layer.backward(self.learning_rate, y_true=y)
+            else:
+                # Hidden layer: use gradient passed from layer ahead
+                next_grad = layer.backward(self.learning_rate, grad_from_next=next_grad)
 
     def print_weights(self):
         for layer in self.layers:
